@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>PSM Chatbot</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f8ff; padding: 20px; }
+    h2 { color: #004080; }
+    #chatbox {
+      width: 100%;
+      max-width: 500px;
+      height: 400px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: white;
+      padding: 10px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+    #userInput { width: 70%; padding: 8px; border-radius: 6px; border: 1px solid #aaa; }
+    #sendBtn {
+      padding: 8px 16px;
+      background: #004080;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #sendBtn:hover { background: #0066cc; }
+    .user { color: #004080; margin: 5px 0; }
+    .bot { color: #008000; margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h2>🤖 Chatbot PSM FSKTM</h2>
+  <div id="chatbox"></div>
+  <input type="text" id="userInput" placeholder="Tanya sesuatu..." />
+  <button id="sendBtn">Hantar</button>
+
+  <script>
+    const chatbox = document.getElementById("chatbox");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    async function sendMessage() {
+      const message = userInput.value;
+      if (!message) return;
+
+      chatbox.innerHTML += `<div class="user"><b>Anda:</b> ${message}</div>`;
+      userInput.value = "";
+
+      const res = await fetch("http://localhost:3000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await res.json();
+      chatbox.innerHTML += `<div class="bot"><b>Bot:</b> ${data.reply}</div>`;
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", e => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>

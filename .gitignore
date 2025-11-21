@@ -1,0 +1,31 @@
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Composer/PHP
+/vendor/
+.env
+.env.local
+/.idea/
+/.vscode/
+.phpunit.result.cache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Uploaded files and user uploads (adjust if you want to include them)
+/uploads/
+"files for your website should be uploaded here!"/
+
+# Build artifacts
+/dist/
+/build/
+
+# Sensitive and runtime
+/.env
+/.htpasswd
